@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bounce Animation Overflow Clip Guide & Fixes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">A11y & Layout Bug Fix</span>
+      <h1>Bounce Animation Clipping</h1>
+      <p class="subtitle">
+        Documenting and resolving the parent <code>overflow: hidden</code> boundary clip issue for 3D translation animations.
+      </p>
+    </header>
+
+    <div class="controls-section">
+      <button class="btn btn-primary" id="btn-replay">Replay Animations 🔄</button>
+      <button class="btn" id="btn-toggle-boundaries">Toggle Boundaries 🔲</button>
+      <button class="btn" id="btn-toggle-play">Pause Animations ⏸️</button>
+    </div>
+
+    <main class="demo-grid">
+      <!-- 1. The Bug: Clipped Bounce -->
+      <section class="card card-bad">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="status-indicator"></span>
+            Clipped Bounce (The Bug)
+          </h2>
+          <p class="card-desc">
+            The bouncing element hits the container's <code>overflow: hidden</code> upper boundary and is clipped, momentarily disappearing.
+          </p>
+        </div>
+        
+        <div class="canvas-wrapper">
+          <div class="overflow-container container-clipped" id="container-bad">
+            <div class="boundary-line"></div>
+            <div class="bounce-box box-bad ease-bounce">Clip ❌</div>
+          </div>
+        </div>
+        
+        <div>
+          <pre><code>/* Parent is strictly clipping */
+.parent {
+  overflow: hidden;
+}
+
+/* Child animates outside */
+.child {
+  animation: ease-kf-bounce 1s;
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- 2. Fix 1: Padding Clearance -->
+      <section class="card card-good-1">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="status-indicator"></span>
+            Fix 1: Padding Clearance
+          </h2>
+          <p class="card-desc">
+            Adding top padding to the container gives the bouncing element enough internal height to complete its cycle without clipping.
+          </p>
+        </div>
+        
+        <div class="canvas-wrapper">
+          <div class="overflow-container container-padded" id="container-good-1">
+            <div class="boundary-line"></div>
+            <div class="bounce-box box-good-1 ease-bounce">Clear ✨</div>
+          </div>
+        </div>
+        
+        <div>
+          <pre><code>/* Provide top clearance */
+.parent {
+  overflow: hidden;
+  padding-top: 35px; /* Bounce height */
+}
+
+.child {
+  animation: ease-kf-bounce 1s;
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- 3. Fix 2: Margin-Padding Trick -->
+      <section class="card card-good-2">
+        <div class="card-header">
+          <h2 class="card-title">
+            <span class="status-indicator"></span>
+            Fix 2: Boundary Offset
+          </h2>
+          <p class="card-desc">
+            Using a negative margin paired with padding expands the parent's overflow region upwards without changing the layout position.
+          </p>
+        </div>
+        
+        <div class="canvas-wrapper">
+          <div class="overflow-container container-negative-margin" id="container-good-2">
+            <div class="boundary-line"></div>
+            <div class="bounce-box box-good-2 ease-bounce">Offset 🚀</div>
+          </div>
+        </div>
+        
+        <div>
+          <pre><code>/* Expand clipping box upwards */
+.parent {
+  overflow: hidden;
+  margin-top: -35px;
+  padding-top: 35px;
+}
+
+.child {
+  animation: ease-kf-bounce 1s;
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- Detailed Explanation Section -->
+    <section class="info-section">
+      <h2>Technical Deep-Dive</h2>
+      
+      <div class="explanation-grid">
+        <div class="explain-block">
+          <h3>Why does this happen?</h3>
+          <p>
+            When a parent element has <code>overflow: hidden</code> (or <code>overflow: auto / scroll</code>), it establishes a new block formatting context (BFC) and defines a strict boundary for its visual contents.
+          </p>
+          <p>
+            Even though EaseMotion CSS animations use high-performance, GPU-composited 3D transforms (like <code>translate3d</code> or <code>translateY</code>), the browser must still conform to the CSS spec and clip any rendered content that exceeds the parent boundary container box.
+          </p>
+          
+          <div class="callout">
+            <div class="callout-title">Spec Clarification</div>
+            <p>
+              Hardware-accelerated rendering on the compositor layer optimizes performance and prevents layout recalculations (jank), but it does <strong>not</strong> bypass overflow constraints or create an infinite drawing plane outside parent scroll/hidden frames.
+            </p>
+          </div>
+        </div>
+        
+        <div class="explain-block">
+          <h3>Best Practices & Guidelines</h3>
+          <ul>
+            <li>
+              <strong>Check parent styling:</strong> When applying vertical motion utilities (like <code>.ease-bounce</code>, <code>.ease-slide-up</code>, or <code>.ease-float</code>), ensure parent elements don't restrict overflow unless necessary.
+            </li>
+            <li>
+              <strong>Use the padding solution:</strong> For structured layouts (e.g. grids or lists), adding top padding creates the safest design buffer.
+            </li>
+            <li>
+              <strong>Use negative margin offsets:</strong> For tight, fixed-height header layouts, the negative margin + positive padding technique expands the clipping plane upwards without shifting relative siblings.
+            </li>
+            <li>
+              <strong>A11y Considerations:</strong> For users with vestibular motion sensitivities, ensure keyframes respect prefers-reduced-motion queries (handled globally in EaseMotion CSS).
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>EaseMotion CSS Documentation Submission — Created for GSSoC contributor submission. <a href="https://github.com/Nareshkumawat-star/EaseMotion-css" target="_blank">Fork Repository</a></p>
+    </footer>
+  </div>
+
+  <script>
+    const btnReplay = document.getElementById('btn-replay');
+    const btnToggleBoundaries = document.getElementById('btn-toggle-boundaries');
+    const btnTogglePlay = document.getElementById('btn-toggle-play');
+    
+    const boxes = document.querySelectorAll('.bounce-box');
+    const boundaries = document.querySelectorAll('.boundary-line');
+    
+    let isPlaying = true;
+    let showBoundaries = true;
+
+    // Replay Animations
+    btnReplay.addEventListener('click', () => {
+      boxes.forEach(box => {
+        box.classList.remove('ease-bounce');
+        void box.offsetWidth; // Trigger reflow to restart animation
+        if (isPlaying) {
+          box.classList.add('ease-bounce');
+        }
+      });
+    });
+
+    // Toggle Boundaries Visualizer
+    btnToggleBoundaries.addEventListener('click', () => {
+      showBoundaries = !showBoundaries;
+      boundaries.forEach(b => {
+        b.style.display = showBoundaries ? 'flex' : 'none';
+      });
+      btnToggleBoundaries.textContent = showBoundaries ? 'Hide Boundaries 🔲' : 'Show Boundaries 🔲';
+    });
+
+    // Toggle Play/Pause
+    btnTogglePlay.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      boxes.forEach(box => {
+        if (isPlaying) {
+          box.style.animationPlayState = 'running';
+          box.classList.add('ease-bounce');
+        } else {
+          box.style.animationPlayState = 'paused';
+        }
+      });
+      btnTogglePlay.textContent = isPlaying ? 'Pause Animations ⏸️' : 'Play Animations ▶️';
+    });
+  </script>
+</body>
+</html>
