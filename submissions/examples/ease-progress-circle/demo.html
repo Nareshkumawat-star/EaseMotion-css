@@ -1,140 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ease Progress Circle Demo</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circular Progress Indicator - EaseMotion CSS</title>
 
-<header class="hero">
-    <h1>Ease Progress Circle</h1>
-    <p>
-        A pure CSS circular progress indicator using SVG and CSS variables.
-    </p>
-</header>
+    <!-- Link to EaseMotion CSS core (if present) -->
+    <link rel="stylesheet" href="../../../core/animations.css" />
+    <!-- Link to component stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="demo-container">
+      <header>
+        <h1>Circular Progress</h1>
+        <p class="subtitle">
+          Lightweight, dark-mode compatible circular indicators utilizing pure
+          CSS keyframes & SVG stroke-dashoffset.
+        </p>
+      </header>
 
-<main class="container">
+      <!-- Global Controls -->
+      <div class="controls-panel">
+        <button class="action-btn" onclick="replayAnimations()">
+          🔄 Replay Animations
+        </button>
+      </div>
 
-    <!-- 75% -->
+      <!-- Showcase Cards Grid -->
+      <div class="showcase-grid">
+        <!-- 1. Classic Primary Circle -->
+        <div class="showcase-card">
+          <h3 class="card-title">Classic Primary</h3>
 
-    <div class="progress-card">
-
-        <div
-            class="ease-progress-circle"
+          <div
+            class="ease-progress-circle-container"
             style="
-                --ease-progress-value:75;
-                --ease-progress-color:#3b82f6;
-                --ease-progress-size:180px;
-                --ease-progress-duration:2s;
-            ">
-
-            <svg viewBox="0 0 120 120">
-
-                <circle
-                    class="track"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
-
-                <circle
-                    class="progress"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
-
+              --ease-progress-value: 75;
+              --ease-progress-size: 130px;
+              --ease-progress-color: #6366f1;
+            "
+          >
+            <svg class="ease-progress-circle" viewBox="0 0 100 100">
+              <circle class="ease-progress-circle__bg" cx="50" cy="50" r="40" />
+              <circle
+                class="ease-progress-circle__fill"
+                cx="50"
+                cy="50"
+                r="40"
+              />
             </svg>
+            <div class="ease-progress-circle__label">
+              <span class="ease-progress-circle__percentage">75%</span>
+            </div>
+          </div>
 
-            <span class="label">75%</span>
-
+          <p class="card-desc">
+            Standard stroke weight using the default brand indigo color.
+          </p>
         </div>
 
-        <h3>Project Completion</h3>
+        <!-- 2. Glowing Accent Circle -->
+        <div class="showcase-card">
+          <h3 class="card-title">Glowing Accent</h3>
 
-    </div>
-
-    <!-- 50% -->
-
-    <div class="progress-card">
-
-        <div
-            class="ease-progress-circle"
+          <div
+            class="ease-progress-circle-container ease-progress-circle--glow"
             style="
-                --ease-progress-value:50;
-                --ease-progress-color:#10b981;
-                --ease-progress-size:180px;
-                --ease-progress-duration:2.5s;
-            ">
-
-            <svg viewBox="0 0 120 120">
-
-                <circle
-                    class="track"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
-
-                <circle
-                    class="progress"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
-
+              --ease-progress-value: 90;
+              --ease-progress-size: 140px;
+              --ease-progress-color: #a855f7;
+            "
+          >
+            <svg class="ease-progress-circle" viewBox="0 0 100 100">
+              <circle class="ease-progress-circle__bg" cx="50" cy="50" r="40" />
+              <circle
+                class="ease-progress-circle__fill"
+                cx="50"
+                cy="50"
+                r="40"
+              />
             </svg>
+            <div class="ease-progress-circle__label">
+              <span class="ease-progress-circle__percentage">90%</span>
+              <span class="ease-progress-circle__text">Storage</span>
+            </div>
+          </div>
 
-            <span class="label">50%</span>
-
+          <p class="card-desc">
+            Drop-shadow glow effect and status text label inside the progress
+            ring.
+          </p>
         </div>
 
-        <h3>CPU Usage</h3>
+        <!-- 3. Stroke Weight Variants -->
+        <div class="showcase-card">
+          <h3 class="card-title">Stroke Weight Variants</h3>
 
-    </div>
-
-    <!-- 92% -->
-
-    <div class="progress-card">
-
-        <div
-            class="ease-progress-circle"
+          <div
             style="
-                --ease-progress-value:92;
-                --ease-progress-color:#f97316;
-                --ease-progress-size:180px;
-                --ease-progress-duration:3s;
-            ">
-
-            <svg viewBox="0 0 120 120">
-
+              display: flex;
+              gap: 1.5rem;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <!-- Thin Variant -->
+            <div
+              class="ease-progress-circle-container ease-progress-circle--thin"
+              style="
+                --ease-progress-value: 40;
+                --ease-progress-size: 90px;
+                --ease-progress-color: #06b6d4;
+              "
+            >
+              <svg class="ease-progress-circle" viewBox="0 0 100 100">
                 <circle
-                    class="track"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
-
+                  class="ease-progress-circle__bg"
+                  cx="50"
+                  cy="50"
+                  r="40"
+                />
                 <circle
-                    class="progress"
-                    cx="60"
-                    cy="60"
-                    r="52">
-                </circle>
+                  class="ease-progress-circle__fill"
+                  cx="50"
+                  cy="50"
+                  r="40"
+                />
+              </svg>
+              <div class="ease-progress-circle__label">
+                <span
+                  class="ease-progress-circle__percentage"
+                  style="font-size: 0.95rem"
+                  >40%</span
+                >
+              </div>
+            </div>
 
-            </svg>
+            <!-- Thick Variant -->
+            <div
+              class="ease-progress-circle-container ease-progress-circle--thick"
+              style="
+                --ease-progress-value: 65;
+                --ease-progress-size: 90px;
+                --ease-progress-color: #f59e0b;
+              "
+            >
+              <svg class="ease-progress-circle" viewBox="0 0 100 100">
+                <circle
+                  class="ease-progress-circle__bg"
+                  cx="50"
+                  cy="50"
+                  r="40"
+                />
+                <circle
+                  class="ease-progress-circle__fill"
+                  cx="50"
+                  cy="50"
+                  r="40"
+                />
+              </svg>
+              <div class="ease-progress-circle__label">
+                <span
+                  class="ease-progress-circle__percentage"
+                  style="font-size: 0.95rem"
+                  >65%</span
+                >
+              </div>
+            </div>
+          </div>
 
-            <span class="label">92%</span>
-
+          <p class="card-desc">
+            Comparison showing a thin (Cyan, stroke-width: 4) and thick (Amber,
+            stroke-width: 12) modifier.
+          </p>
         </div>
-
-        <h3>Storage</h3>
-
+      </div>
     </div>
 
-</main>
-
-</body>
+    <script>
+      // Trigger replay of circle loading animations
+      function replayAnimations() {
+        const containers = document.querySelectorAll(
+          ".ease-progress-circle-container"
+        );
+        containers.forEach((container) => {
+          // Toggle reset class
+          container.classList.add("reset-animation");
+          // Force reflow/repaint to cancel running animation
+          void container.offsetWidth;
+          // Remove reset class to trigger the CSS keyframes animation
+          container.classList.remove("reset-animation");
+        });
+      }
+    </script>
+  </body>
 </html>
