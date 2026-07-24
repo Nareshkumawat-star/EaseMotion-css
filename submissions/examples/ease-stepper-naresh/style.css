@@ -1,0 +1,315 @@
+/* Stepper Example Demo Styles */
+
+:root {
+  --theme-bg: #0b1121;
+  --theme-text: #f8fafc;
+  --theme-text-muted: #94a3b8;
+  --theme-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.demo-bg-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  left: -200px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.demo-container {
+  max-width: 1000px;
+  width: 100%;
+  padding: 3rem 1.5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  box-sizing: border-box;
+}
+
+/* Header */
+.demo-header {
+  text-align: center;
+}
+
+.demo-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #818cf8;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.demo-header h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem 0;
+  background: linear-gradient(135deg, #ffffff 40%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+.demo-header p {
+  color: var(--theme-text-muted);
+  font-size: 1.1rem;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Layout */
+.demo-main {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 868px) {
+  .demo-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-section {
+  box-sizing: border-box;
+}
+
+.card-glass {
+  background: rgba(20, 30, 51, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--theme-border);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.section-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem 0;
+  color: #f8fafc;
+}
+
+.section-header p {
+  font-size: 0.875rem;
+  color: var(--theme-text-muted);
+  margin: 0;
+}
+
+/* Stepper Customizations in Demo */
+.ease-stepper {
+  --ease-step-color-completed: #6366f1;
+  --ease-step-color-active: #818cf8;
+  --ease-step-color-upcoming: #334155;
+  background: rgba(15, 23, 42, 0.3);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Wizard Panels */
+.wizard-content {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wizard-panel {
+  display: none;
+  animation: ease-fade-in var(--ease-speed-medium, 300ms) var(--ease-ease, ease) forwards;
+}
+
+.wizard-panel.active {
+  display: block;
+}
+
+.wizard-panel h3 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+
+.wizard-panel p {
+  color: var(--theme-text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Form Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+.form-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+.address-span {
+  grid-column: span 2;
+}
+
+/* Payment Box */
+.payment-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.payment-option:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.payment-option input {
+  margin-top: 0.25rem;
+}
+
+.payment-option label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.payment-option strong {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.payment-option span {
+  font-size: 0.8rem;
+  color: var(--theme-text-muted);
+}
+
+/* Success State */
+.success-illustration {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Wizard Actions */
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #6366f1;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Vertical Stepper Specific Descriptions */
+.step-desc {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--theme-text-muted);
+  margin-top: 0.25rem;
+}
